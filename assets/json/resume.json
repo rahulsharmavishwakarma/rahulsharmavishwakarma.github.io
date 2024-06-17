@@ -57,45 +57,6 @@
    
     }
   ],
-  "awards and competitions": [],
-  "certificates": [
-    {
-      "name": "Oracle Cloud Infrastructure 2024 Generative AI Certified Professional",
-      "date": "2024-06",
-      "issuer": "Oracle",
-      "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=D52E909634E812B71E68E8041596557B387C51E057CC128DFE7F493BC1318142",
-      "icon": "fa-solid fa-clipboard-check"
-    },
-    {
-      "name": "Microsoft Certified: Azure Data Scientist Associate ",
-      "date": "2024-06-02",
-      "issuer": "Microsoft",
-      "url": "https://learn.microsoft.com/api/credentials/share/en-us/rahulsharma869/EA482E2B4DFC9717?sharingId=34820BE590AC761F",
-      "icon": "fa-solid fa-clipboard-check"
-    },
-    {
-      "name": "Deep Learning Specialization",
-      "date": "2023-08-29",
-      "issuer": "DeepLearning.AI",
-      "url": "https://www.coursera.org/account/accomplishments/specialization/RFWFEKPAPQLE",
-      "icon": "fa-solid fa-clipboard-check"
-    },
-    {
-      "name": "Machine Learning Specialization",
-      "date": "2023-04-04",
-      "issuer": "DeepLearning.AI",
-      "url": "https://coursera.org/share/1e3b17801081f7ff95ba3294bf3e10ff",
-      "icon": "fa-solid fa-clipboard-check"
-    },
-    {
-      "name": "Microsoft Certified: Azure AI Fundamentals",
-      "date": "2023-02-03",
-      "issuer": "Stanford University",
-      "url": "https://learn.microsoft.com/en-us/users/rahulsharma869/credentials/f142556b8ec4048b",
-      "icon": "fa-solid fa-clipboard-check"
-    }
-  ],
-  "publications": [],
   "skills": [
     {
       "name": "Languages and Libraries",
@@ -150,6 +111,46 @@
       ]
     }
   ],
+  "awards and competitions": [],
+  "certificates": [
+    {
+      "name": "Oracle Cloud Infrastructure 2024 Generative AI Certified Professional",
+      "date": "",
+      "issuer": "Oracle",
+      "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=D52E909634E812B71E68E8041596557B387C51E057CC128DFE7F493BC1318142",
+      "icon": "fa-solid fa-clipboard-check"
+    },
+    {
+      "name": "Microsoft Certified: Azure Data Scientist Associate ",
+      "date": "",
+      "issuer": "Microsoft",
+      "url": "https://learn.microsoft.com/api/credentials/share/en-us/rahulsharma869/EA482E2B4DFC9717?sharingId=34820BE590AC761F",
+      "icon": "fa-solid fa-clipboard-check"
+    },
+    {
+      "name": "Deep Learning Specialization",
+      "date": "",
+      "issuer": "DeepLearning.AI",
+      "url": "https://www.coursera.org/account/accomplishments/specialization/RFWFEKPAPQLE",
+      "icon": "fa-solid fa-clipboard-check"
+    },
+    {
+      "name": "Machine Learning Specialization",
+      "date": "",
+      "issuer": "DeepLearning.AI",
+      "url": "https://coursera.org/share/1e3b17801081f7ff95ba3294bf3e10ff",
+      "icon": "fa-solid fa-clipboard-check"
+    },
+    {
+      "name": "Microsoft Certified: Azure AI Fundamentals",
+      "date": "",
+      "issuer": "Stanford University",
+      "url": "https://learn.microsoft.com/en-us/users/rahulsharma869/credentials/f142556b8ec4048b",
+      "icon": "fa-solid fa-clipboard-check"
+    }
+  ],
+  "publications": [],
+  
   "languages": [
     {
       "language": "English",
