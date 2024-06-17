@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: <b>Master's student in Electrical Engineering at <a href="https://profiles.stanford.edu/ishikaa-lunawat">Stanford University</a></b>
+subtitle: <b>Bachelor's graduate in Computer Science and Engineering at <a href="https://vtu.ac.in/">Visvesvaraya Technological University</a></b>
 
 profile:
   align: right
@@ -18,14 +18,10 @@ latest_posts: false  # includes a list of the newest posts
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
-My passion lies in solving complex problems at the intersection of `Computer Vision`, `Machine Learning` and `Robotics`. I thrive on crafting innovative solutions towards embodied and intelligent systems and robots.
+My passion lies in solving complex problems at the intersection of `Computer Vision`, `Machine Learning`, `Natural Language Processing` and `Data Science`. I thrive on crafting innovative solutions towards intelligent systems, AI models and data-driven applications.
 
-Currently, I'm a master's student in Electrical Engineering at Stanford University, in the *Information Systems and Science* track. I completed my undergraduate degree in Electrical and Electronics Engineering at the National Institute of Technology Tiruchirappalli, India.
+Currently, a computer science graduate from [HKBK College of Engineering, Bengaluru](https://www.hkbk.edu.in/). Expertise in developing AI models across domains like computer vision, NLP, machine learning along with strong software development skills.
 
-Previously, I pursued my summer internship as a Robotic Perception Intern at the [iROSA group](https://irosalab.com/) (Intelligent Autonomous Systems Lab) at Technische Universität Darmstadt, Germany. My work revolved around a vision model that learns a generalizable 3D scene representation for 6DoF grasping. 
+Proven track record of research projects - AI diagnostic assistant using radiology, VQA for medical imaging, document analysis using N-shot learning & R-CNN, diffusion models. Published work and experience from academic projects & industry internships.
 
-I also worked on real-time sleep staging using Interbeat Interval (IBI) of Heart in collaboration with [Omynk Inc., USA](https://www.omnyk.com/) as a part of my bachelor's thesis. Additionally, I conducted research at the [Pattern Recognition Laboratory](https://www.iitbhu.ac.in/dept/cse/labs#sec9) in IIT-BHU as a Computer Vision Intern on gait recognition and developed novel 3D Convolution models to tackle issues with occluded frames. 
-
-
-During my undergraduate study, I was a part of the [Spider R&D Club](https://spider.nitt.edu/) as a Machine Learning Researcher. My role involved contributing to interdisciplinary projects, organizing knowledge-sharing sessions and mentoring juniors.
-
+Skilled in *Python, PyTorch, TensorFlow, deep learning frameworks*, data engineering tools like *SQL, MongoDB and cloud platforms*. Adept in full software development life cycle with deployment using containerization. Strong foundations in *data structures, algorithms and machine learning* theory for data science applications. 
