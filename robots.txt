@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://rahulsharmavishwakarma.github.io/sitemap.xml
+Sitemap: https://ishikaalunawat.github.io/sitemap.xml
