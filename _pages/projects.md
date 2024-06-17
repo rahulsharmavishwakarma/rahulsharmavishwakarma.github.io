@@ -6,7 +6,7 @@ description: Research projects.
 nav: true
 nav_order: 2
 # display_categories: [2021-2023]
-horizontal: false
+horizontal: true
 ---
 
 <!-- pages/projects.md -->
