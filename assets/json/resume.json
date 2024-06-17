@@ -43,16 +43,16 @@
       "name": "HKBK College of Engineering",
       "position": "Undergraduate Researcher",
       "url": "https://www.hkbk.edu.in/",
-      "startDate": "August 2023",
-      "endDate": "May 2024",
+      "startDate": "2023-08-01",
+      "endDate": "2024-05-29",
       "summary": "Developed a model to analyze and respond to questions on biomedical images with over 70% accuracy. Conducted research on fine-tuning large language models like LLaMA for medical question-answering and designed an R-CNN based model for document fraud analysis."
     },
     {
       "name": "Varcons Technologies",
       "position": "Machine Learning Intern",
       "url": "https://www.varconstech.com/",
-      "startDate": "August 2023",
-      "endDate": "September 2023",
+      "startDate": "2023-08-01",
+      "endDate": "2023-09-30",
       "summary": "Built a sentiment analysis model for stock price prediction with over 80% accuracy. Conducted research on machine learning topics in computer vision and natural language processing systems."
    
     }
@@ -61,10 +61,10 @@
   "certificates": [
     {
       "name": "Oracle Cloud Infrastructure 2024 Generative AI Certified Professional",
-      "date": "2024-06-05",
+      "date": "2024-06",
       "issuer": "Oracle",
       "url": "https://catalog-education.oracle.com/pls/certview/sharebadge?id=D52E909634E812B71E68E8041596557B387C51E057CC128DFE7F493BC1318142",
-      "icon": "fa-solid fa-location-dot"
+      "icon": "fa-solid fa-clipboard-check"
     },
     {
       "name": "Microsoft Certified: Azure Data Scientist Associate ",
