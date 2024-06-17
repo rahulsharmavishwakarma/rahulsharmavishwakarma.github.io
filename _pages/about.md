@@ -1,6 +1,6 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
 subtitle: <b>Bachelors Graduate in Computer Science and Engineering at <a href="https://www.vtu.ac.in">Visvesvaraya Technological University</a></b>
 
