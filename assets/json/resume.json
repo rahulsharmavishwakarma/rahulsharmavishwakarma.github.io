@@ -149,7 +149,15 @@
       "icon": "fa-solid fa-clipboard-check"
     }
   ],
-  "publications": [],
+  "publications": [
+    {
+      "name": "Beyond Imagery: AI-Enhanced Diagnostic Assistant for Cancer and Tumor Diagnosis using Radiology Imaging",
+      "publisher": "IJETS",
+      "releaseDate": "2024-03-25",
+      "url": "https://ijets.in/Downloads/Published/E0202403007.pdf",
+      "summary": "Developing a multimodal model for analyzing and responding to questions on medical images using VQA datasets and fine-tuned language models."
+    }
+  ],
   
   "languages": [
     {
