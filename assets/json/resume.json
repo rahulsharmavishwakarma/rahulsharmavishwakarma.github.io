@@ -147,6 +147,13 @@
       "issuer": "Stanford University",
       "url": "https://learn.microsoft.com/en-us/users/rahulsharma869/credentials/f142556b8ec4048b",
       "icon": "fa-solid fa-clipboard-check"
+    },
+    {
+      "name": "MongoDB Certified Associate Developer",
+      "date": "",
+      "issuer": "MongoDB",
+      "url": "https://learn.mongodb.com/c/hn1oCLC7Qr2mcjhyNdELpA",
+      "icon": "fa-solid fa-clipboard-check"
     }
   ],
   "publications": [
