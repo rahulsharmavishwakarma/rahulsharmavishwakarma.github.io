@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: <b>Bachelor's graduate in Computer Science and Engineering at <a href="https://vtu.ac.in/">Visvesvaraya Technological University</a></b>
+subtitle: <b>Bachelor's graduate in Computer Science and Engineering from <a href="https://vtu.ac.in/">Visvesvaraya Technological University</a></b>
 
 profile:
   align: right
