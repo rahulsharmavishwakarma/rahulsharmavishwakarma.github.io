@@ -1,25 +1,20 @@
-    {% if site.footer_fixed %}
-    <footer class="fixed-bottom">
-      <div class="container mt-0">
-        &copy; Copyright {{ site.time | date: '%Y' }} {{ site.first_name }} {{ site.middle_name }} {{ site.last_name }}. {{ site.footer_text }}
-        {%- if site.impressum_path -%}
-        <a href="{{ site.url }}{{ site.baseurl }}{{ site.impressum_path }}">Impressum</a>.
-        {%- endif -%}
-        {%- if site.last_updated -%}
-        Last updated: {{ "now" | date: '%B %d, %Y' }}.
-        {%- endif %}
-      </div>
-    </footer>
-    {%- else -%}
-    <footer class="sticky-bottom mt-5">
-      <div class="container">
-        &copy; Copyright {{ site.time | date: '%Y' }} {{ site.first_name }} {{ site.middle_name }} {{ site.last_name }}. {{ site.footer_text }}
-        {%- if site.impressum_path -%}
-        <a href="{{ site.url }}{{ site.baseurl }}{{ site.impressum_path }}">Impressum</a>.
-        {%- endif -%}
-        {%- if site.last_updated -%}
-        Last updated: {{ "now" | date: '%B %d, %Y' }}.
-        {%- endif %}
-      </div>
-    </footer>
-    {%- endif %}
+{% if site.footer_fixed %}
+<footer class="fixed-bottom">
+  <div class="container mt-0">
+    &copy; Copyright {{ site.time | date: '%Y' }} {{ site.first_name }} {{ site.middle_name }} {{ site.last_name }}. {{ site.footer_text }}
+  </div>
+</footer>
+{%- else %}
+<footer class="site-footer">
+  <div class="container sf">
+    <div class="sf-social">
+      {% if site.github_username %}<a href="https://github.com/{{ site.github_username }}" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>{% endif %}
+      {% if site.linkedin_username %}<a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>{% endif %}
+      {% if site.twitter_username %}<a href="https://x.com/{{ site.twitter_username }}" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>{% endif %}
+      <a href="mailto:{{ site.email }}" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+      <a href="{{ '/feed.xml' | relative_url }}" aria-label="RSS"><i class="fa-solid fa-rss"></i></a>
+    </div>
+    <p class="sf-line">&copy; {{ site.time | date: '%Y' }} {{ site.first_name }} {{ site.last_name }}</p>
+  </div>
+</footer>
+{%- endif %}

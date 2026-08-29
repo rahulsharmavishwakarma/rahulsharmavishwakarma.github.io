@@ -1,0 +1,60 @@
+---
+layout: default
+---
+{%- assign c = site.data.content -%}
+{%- assign ab = c.about -%}
+
+<div class="editorial-home">
+
+  <!-- Hero -->
+  <header class="e-hero">
+    <div class="e-hero-text">
+      <span class="e-eyebrow">{{ ab.eyebrow }}</span>
+      <h1>{{ ab.name }}</h1>
+      <p class="e-dek">{{ ab.tagline }}</p>
+      <div class="e-cta">
+        <a class="btn-e primary" href="{{ ab.cta_primary.url | relative_url }}">{{ ab.cta_primary.label }} →</a>
+        <a class="btn-e ghost" href="{{ ab.cta_secondary.url | relative_url }}">{{ ab.cta_secondary.label }}</a>
+      </div>
+      <div class="e-links">
+        {% if site.github_username %}<a class="e-link" href="https://github.com/{{ site.github_username }}" aria-label="GitHub profile" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i></a>{% endif %}
+        {% if site.linkedin_username %}<a class="e-link" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" aria-label="LinkedIn profile" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>{% endif %}
+        {% if site.twitter_username %}<a class="e-link" href="https://x.com/{{ site.twitter_username }}" aria-label="X (Twitter) profile" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i></a>{% endif %}
+        <a class="e-link" href="{{ '/assets/pdf/Rahul_Sharma_CV.pdf' | relative_url }}" aria-label="CV (PDF)" title="CV (PDF)" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-pdf" aria-hidden="true"></i></a>
+      </div>
+    </div>
+    <div class="e-hero-photo">
+      <img src="{{ ab.photo | relative_url }}" alt="{{ ab.name }}">
+    </div>
+  </header>
+
+  <!-- Bio -->
+  <section class="e-section e-bio-section">
+    {% for paragraph in ab.bio %}
+      <p>{{ paragraph }}</p>
+    {% endfor %}
+  </section>
+
+  <!-- Selected Writing -->
+  <section class="e-section">
+    <div class="e-sec-rule">
+      <h2>Selected Writing</h2><span class="e-line"></span>
+      <a class="e-more" href="{{ '/' | relative_url }}">All articles →</a>
+    </div>
+    <div class="e-entries">
+      {% for item in c.selected_writing %}
+      <div class="e-entry">
+        <div class="e-left">
+          <div class="e-date">{{ item.date | date: "%b %-d, %Y" }}</div>
+          <span class="e-pill {% if item.type == 'Paper' %}paper{% else %}essay{% endif %}">{{ item.type }}</span>
+        </div>
+        <div class="e-body">
+          <a class="e-title" href="{{ item.url | relative_url }}" {% if item.external %}target="_blank" rel="noopener noreferrer"{% endif %}>{{ item.title }}</a>
+          <div class="e-desc">{{ item.desc }}</div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+</div>
