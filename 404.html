@@ -1,9 +1,120 @@
 ---
-layout: page
+layout: default
 permalink: /404.html
-title: "Page not found"
-description: "Looks like there has been a mistake. Nothing exists here."
-redirect: true
+title: "404 — loss did not converge"
+description: "This page isn't in the training set."
 ---
 
-<p>You will be redirected to the main page within 3 seconds. If not redirected, please go back to the <a href="{{ site.baseurl }}/">home page</a>.</p>
+<div class="nf404">
+  <figure class="nf-plot" aria-hidden="true">
+    <svg viewBox="0 0 340 150" role="img">
+      <!-- faint grid -->
+      <g class="nf-grid" stroke="var(--global-divider-color)" stroke-width="1" opacity=".45">
+        <line x1="30" y1="118" x2="322" y2="118"/>
+        <line x1="30" y1="84"  x2="322" y2="84"/>
+        <line x1="30" y1="50"  x2="322" y2="50"/>
+        <line x1="30" y1="16"  x2="322" y2="16"/>
+        <line x1="30" y1="8"   x2="30"  y2="126"/>
+      </g>
+      <!-- the 4.04 plateau -->
+      <line class="nf-plateau" x1="30" y1="46" x2="322" y2="46"
+            stroke="var(--global-theme-color)" stroke-width="1.5" stroke-dasharray="5 6" opacity=".8"/>
+      <text class="nf-plateau-label" x="318" y="38" text-anchor="end">loss = 4.04</text>
+      <!-- training scatter: noisy early steps -->
+      <g class="nf-scatter" fill="var(--global-theme-color)">
+        <circle cx="42"  cy="30" r="2.5"/><circle cx="54"  cy="52" r="2.5"/>
+        <circle cx="66"  cy="24" r="2.5"/><circle cx="78"  cy="58" r="2.5"/>
+        <circle cx="90"  cy="38" r="2.5"/><circle cx="102" cy="62" r="2.5"/>
+        <circle cx="114" cy="46" r="2.5"/><circle cx="126" cy="60" r="2.5"/>
+      </g>
+      <!-- the loss curve, drawn on load -->
+      <path class="nf-path" d="M34,22 C56,10 60,66 84,58 C108,50 108,72 132,64
+               C160,55 176,54 204,50 C238,46 268,46 296,46 C306,46 314,46 322,46"
+            fill="none" stroke="var(--global-text-color)" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- the stuck optimizer ball -->
+      <circle class="nf-ball" cx="322" cy="46" r="5" fill="var(--global-theme-color)"/>
+    </svg>
+    <figcaption class="nf-readout">
+      <span class="nf-term">run 404</span>
+      <span class="nf-term">epoch 404/404</span>
+      <span class="nf-term">loss: 4.04</span>
+      <span class="nf-term">early stopping: <b>page not found</b></span>
+    </figcaption>
+  </figure>
+
+  <h1 class="nf-title">Loss did not converge</h1>
+  <p class="nf-sub">
+    This page isn't in the training set — the model looked everywhere and
+    plateaued at 4.04. Nothing here will generalize; go back to something it has seen before.
+  </p>
+
+  <div class="nf-cta">
+    <a class="btn-e primary" href="{{ '/' | relative_url }}">Back to articles →</a>
+    <a class="btn-e ghost" href="{{ '/about/' | relative_url }}">About</a>
+  </div>
+
+  <p class="nf-redirect nf-term">redirecting home in <span id="nf-count">10</span>s</p>
+</div>
+
+<style>
+  .nf404 { max-width: 620px; margin: 3rem auto 4rem; padding: 0 1.25rem; }
+  .nf-plot { margin: 0 0 1.75rem; }
+  .nf-plot svg { width: 100%; height: auto; display: block; }
+  .nf-plateau-label,
+  .nf-term {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    fill: var(--global-text-color-light);
+  }
+  .nf-term b { color: var(--global-theme-color); font-weight: 600; }
+  .nf-readout {
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    margin-top: 10px; color: var(--global-text-color-light);
+  }
+  .nf-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.9rem, 5vw, 2.6rem);
+    letter-spacing: -0.02em; margin: 0 0 0.6rem;
+  }
+  .nf-sub { color: var(--global-text-color-light); line-height: 1.65; margin: 0 0 1.6rem; }
+  .nf-cta { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 1.4rem; }
+  .nf-redirect { color: var(--global-text-color-light); margin: 0; }
+  .nf-redirect #nf-count { color: var(--global-theme-color); font-weight: 600; }
+
+  /* curve draws itself, plateau + ball fade in after */
+  .nf-path {
+    stroke-dasharray: 480;
+    stroke-dashoffset: 480;
+    animation: nf-draw 2.2s cubic-bezier(.3,.6,.3,1) .2s forwards;
+  }
+  .nf-plateau, .nf-plateau-label, .nf-ball { opacity: 0; animation: nf-fade .7s ease-out 2.2s forwards; }
+  .nf-scatter circle { opacity: 0; animation: nf-fade .5s ease-out forwards; }
+  .nf-scatter circle:nth-child(odd)  { animation-delay: .55s; }
+  .nf-scatter circle:nth-child(even) { animation-delay: .85s; }
+  @keyframes nf-draw { to { stroke-dashoffset: 0; } }
+  @keyframes nf-fade { to { opacity: 1; } }
+  .nf-plateau, .nf-plateau-label, .nf-ball { animation-fill-mode: forwards; }
+  .nf-scatter circle { animation-fill-mode: forwards; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nf-path { animation: none; stroke-dashoffset: 0; }
+    .nf-plateau, .nf-plateau-label, .nf-ball, .nf-scatter circle { animation: none; opacity: 1; }
+  }
+</style>
+
+<script>
+  (function () {
+    var left = 10;
+    var el = document.getElementById('nf-count');
+    if (!el) return;
+    var tick = setInterval(function () {
+      left -= 1;
+      if (left <= 0) {
+        clearInterval(tick);
+        window.location.href = {{ '/' | relative_url | jsonify }};
+      } else {
+        el.textContent = left;
+      }
+    }, 1000);
+  })();
+</script>
