@@ -1,22 +1,9 @@
 ---
-layout: about
+layout: home
 title: About
-permalink: /
-subtitle: <b>Bachelor's graduate in Computer Science and Engineering from <a href="https://vtu.ac.in/">Visvesvaraya Technological University</a></b>
-
-profile:
-  align: right
-  image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
-  # address: >
-  #   <p>555 your office number</p>
-  #   <p>123 your address street</p>
-  #   <p>Your City, State 12345</p>
-
-news: false  # includes a list of news items
-latest_posts: false  # includes a list of the newest posts
-selected_papers: false # includes a list of papers marked as "selected={true}"
-social: true  # includes social icons at the bottom of the page
+permalink: /about/
+nav: true
+nav_order: 2
 ---
 My passion lies in solving complex problems at the intersection of `Computer Vision`, `Machine Learning`, `Natural Language Processing` and `Data Science`. I thrive on crafting innovative solutions towards intelligent systems, AI models and data-driven applications.
 
