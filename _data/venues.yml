@@ -1,6 +1,15 @@
-"AJP":
-  url: https://aapt.scitation.org/journal/ajp
-  color: "#00369f"
+IJETS:
+  name: International Journal of Emerging Technologies & Sciences
+  url: https://ijets.in/
 
-"PhysRev":
-  url: https://journals.aps.org/
+MIDL:
+  name: Medical Imaging with Deep Learning
+  url: https://midl.io/
+
+arXiv:
+  name: arXiv preprint
+  url: https://arxiv.org/
+
+'CoRR':
+  name: Computing Research Repository (arXiv)
+  url: https://arxiv.org/
