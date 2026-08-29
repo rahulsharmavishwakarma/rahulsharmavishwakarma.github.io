@@ -89,8 +89,11 @@ let transTheme = () => {
 
 let initTheme = (theme) => {
   if (theme == null || theme == "null") {
+    // Default to dark unless the visitor's OS explicitly prefers light.
     const userPref = window.matchMedia;
-    if (userPref && userPref("(prefers-color-scheme: dark)").matches) {
+    if (userPref && userPref("(prefers-color-scheme: light)").matches) {
+      theme = "light";
+    } else {
       theme = "dark";
     }
   }
