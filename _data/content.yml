@@ -1,0 +1,47 @@
+# ============================================================================
+# Site content config — the single place to edit copy on the site.
+#
+#   • About-page text (hero, bio, selected writing) ....... `about` / `selected_writing`
+#   • Navigation labels .................................. `nav`
+#   • Footer note (optional) ............................. `footer`
+#
+# Site-wide settings (name, email, social handles, theme colors, fonts) live
+# in `_config.yml`. Articles live in `_posts/` — see `_posts/_TEMPLATE.md`.
+# ============================================================================
+
+about:
+  eyebrow: "ML Engineer"
+  name: "Rahul Sharma"
+  # One-line focus under the name:
+  tagline: "I build and fine-tune vision-language models, retrieval pipelines, and agentic systems — and ship them into production."
+  photo: "/assets/img/prof_pic.jpg"
+  cta_primary:   { label: "Read articles", url: "/" }
+  cta_secondary: { label: "Get in touch",  url: "mailto:rahulsharmaviswakarma@gmail.com" }
+
+  # Bio paragraphs — render in order. Inline HTML (e.g. <a href="">) is allowed.
+  bio:
+    - "Hey, I'm Rahul — an ML engineer. I work across the stack that turns models into shipped products: fine-tuning vision-language models, building retrieval and RAG pipelines, and wiring up agentic systems that hold up in production."
+    - "I'm currently an SDE-2 AI/ML Engineer at ZysecAI, focused on large-scale document understanding — OCR over huge unstructured corpora, the fine-tuning behind it, and the retrieval and agent plumbing that makes it trustworthy."
+    - "Before that I did undergraduate research on biomedical visual question answering (the basis of our <a href='https://ijets.in/Downloads/Published/E0202403007.pdf'>IJETS paper</a>), plus NLP work in finance and EdTech. I studied CS at VTU, and I write here to think out loud about what I build."
+
+# Curated highlights shown on the About page.
+# `type` styles the pill: Essay | Paper | Note | Talk
+selected_writing:
+  - title: "Serving LLMs: what actually decides your latency"
+    url: "/blog/2026/serving-llms-in-production/"
+    date: "2026-08-30"
+    type: "Article"
+    desc: "TTFT, prefill vs decode, the KV-cache bill, quantization, multi-LoRA serving — and the runtime + hardware matrix behind them."
+
+nav:
+  articles: "Articles"   # label for the articles/home link
+  about: "About"         # label for the about link
+
+footer:
+  # Extra muted line under the © line. Leave empty ("") to hide.
+  note: ""
+
+# Default frontmatter for new articles — used by _posts/_TEMPLATE.md
+articles:
+  default_tags: ["machine-learning", "ai"]
+  default_category: "articles"
