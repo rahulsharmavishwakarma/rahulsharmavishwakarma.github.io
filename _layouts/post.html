@@ -15,28 +15,22 @@ layout: default
 
 <div class="post">
 
-  <header class="post-header">
+  <header class="post-header e-article-head">
+    <span class="e-eyebrow">{{ page.categories | first | default: "Article" | capitalize }}</span>
     <h1 class="post-title">{{ page.title }}</h1>
-    <p class="post-meta">{{ page.date | date: "%B %-d, %Y" }}{%- if page.author -%} • {{ page.author }}{%- endif -%}{%- if page.meta -%} • {{ page.meta }}{%- endif -%}</p>
-    <p class="post-tags">
-      <a href="{{ year | prepend: '/blog/' | prepend: site.baseurl}}"> <i class="fas fa-calendar fa-sm"></i> {{ year }} </a>
-      {%- if tags != "" %}
-      &nbsp; &middot; &nbsp;
-        {% for tag in page.tags -%}
-        <a href="{{ tag | slugify | prepend: '/blog/tag/' | prepend: site.baseurl}}">
-          <i class="fas fa-hashtag fa-sm"></i> {{ tag }}</a> &nbsp;
-          {% endfor -%}
-      {% endif %}
-
-      {%- if categories != "" %}
-      &nbsp; &middot; &nbsp;
-        {% for category in page.categories -%}
-        <a href="{{ category | slugify | prepend: '/blog/category/' | prepend: site.baseurl}}">
-          <i class="fas fa-tag fa-sm"></i> {{ category }}</a> &nbsp;
-          {% endfor -%}
-      {% endif %}
-
-    </p>
+    <div class="e-meta">
+      <span>{{ page.date | date: "%B %-d, %Y" }}</span>
+      {%- if page.author %} <span class="sep">·</span> <span>{{ page.author }}</span>{% endif %}
+      {%- if page.meta %} <span class="sep">·</span> <span>{{ page.meta }}</span>{% endif %}
+      {%- if page.tags.size > 0 -%}
+      <span class="sep">·</span>
+      {%- for tag in page.tags -%}<a href="{{ tag | slugify | prepend: '/blog/tag/' | relative_url }}">{{ tag }}</a>{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}
+      {%- endif -%}
+      {%- if page.categories.size > 0 -%}
+      <span class="sep">·</span>
+      {%- for category in page.categories -%}<a href="{{ category | slugify | prepend: '/blog/category/' | relative_url }}">{{ category }}</a>{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}
+      {%- endif -%}
+    </div>
   </header>
 
   <article class="post-content">
