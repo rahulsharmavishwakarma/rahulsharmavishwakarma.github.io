@@ -9,4 +9,4 @@ _site
 Gemfile.lock
 vendor
 _design-mockups
-
+.cursorignore
