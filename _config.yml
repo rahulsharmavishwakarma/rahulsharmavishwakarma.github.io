@@ -2,21 +2,20 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: blank # the website title (if blank, full name will be used instead)
+title: Rahul Sharma # the website title (used for the RSS feed + SEO)
 first_name: Rahul
 middle_name: 
 last_name: Sharma
+author: Rahul Sharma
 email: rahulsharmaviswakarma@gmail.com
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
-  A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+  Rahul Sharma — AI/ML Engineer (SDE-2 at ZysecAI). Building vision-language models, retrieval pipelines, and agentic systems. Portfolio, writing, and projects.
 footer_text: >
-  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
-  Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-  Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
+  © 2026 Rahul Sharma. Built with <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> and hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
 keywords: Computer Vision, Natural Language Processing, Machine Learning, AI  # add your own keywords or leave empty
 
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: ⚛️  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+icon: favicon.svg  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 url: https://rahulsharmavishwakarma.github.io # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/
@@ -52,10 +51,10 @@ rss_icon: false
 # -----------------------------------------------------------------------------
 
 navbar_fixed: true
-footer_fixed: true
+footer_fixed: false
 
 # Dimensions
-max_width: 800px
+max_width: 1040px
 
 # TODO: add layout settings (single page vs. multi-page)
 
@@ -73,7 +72,7 @@ og_image: # The site-wide (default for all links) Open Graph preview image
 
 github_username: rahulsharmavishwakarma # your GitHub user name
 gitlab_username: # your GitLab user name
-twitter_username: # your Twitter handle
+twitter_username: RahulSharma_AI # your Twitter handle
 mastodon_username: # your mastodon instance+username in the format instance.tld/@username
 linkedin_username: rahulsharmavishwakarma # your LinkedIn user name
 telegram_username: # your Telegram user name
@@ -123,14 +122,14 @@ bing_site_verification:  # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: al-folio # blog_name will be displayed in your blog page
-blog_nav_title:  # your blog must have a title for it to be displayed in the nav bar
-blog_description: a simple whitespace theme for academics
+blog_name: Articles # blog_name will be displayed in your blog page
+blog_nav_title:  # left blank: the homepage is now the articles feed
+blog_description: essays, notes and whitepapers on AI, vision-language models, and the systems I build
 permalink: /blog/:year/:title/
 
 # Pagination
 pagination:
-  enabled: false
+  enabled: true
 
 related_blog_posts:
   enabled: false
@@ -140,10 +139,10 @@ related_blog_posts:
 # Follow instructions on https://giscus.app/ to setup for your repo to fill out
 # the information below.
 giscus:
-  repo: alshedivat/al-folio      # <your-github-user-name>/<your-github-repo-name>
-  repo_id: MDEwOlJlcG9zaXRvcnk2MDAyNDM2NQ==
+  repo:                          # <your-github-user-name>/<your-github-repo-name>
+  repo_id:                       # from https://giscus.app
   category: Comments             # name of the category under which discussions will be created
-  category_id: DIC_kwDOA5PmLc4CTBt6
+  category_id:                   # from https://giscus.app
   mapping: title                 # identify discussions by post title
   strict: 1                      # use strict identification mode
   reactions_enabled: 1           # enable (1) or disable (0) emoji reactions
@@ -153,15 +152,13 @@ giscus:
   lang: en
 
 # Disqus comments (DEPRECATED)
-disqus_shortname: al-folio # put your disqus shortname
+disqus_shortname: # put your disqus shortname
 # https://help.disqus.com/en/articles/1717111-what-s-a-shortname
 
 # External sources.
 # If you have blog posts published on medium.com or other external sources,
 # you can display them in your blog by adding a link to the RSS feed.
-external_sources:
-  - name: medium.com
-    rss_url: https://medium.com/@al-folio/feed
+external_sources: []
 
 # -----------------------------------------------------------------------------
 # Collections
@@ -211,6 +208,10 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+  - AGENTS.md
+  - README.md
+  - docs
+  - archives
 keep_files:
   - CNAME
   - .nojekyll
@@ -265,8 +266,8 @@ jekyll-archives:
     tag: '/blog/tag/:name/'
     category: '/blog/category/:name/'
 
-display_tags: ['formatting', 'images', 'links', 'math', 'code'] # these tags will be displayed on the front page of your blog
-display_categories: ['blockquotes'] # these categories will be displayed on the front page of your blog
+display_tags: ['vision-language', 'medical-imaging', 'computer-vision', 'nlp', 'sign-language'] # these tags will be displayed on the front page of your blog
+display_categories: ['articles', 'whitepapers'] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
@@ -274,8 +275,8 @@ display_categories: ['blockquotes'] # these categories will be displayed on the 
 
 scholar:
 
-  last_name: [Einstein]
-  first_name: [Albert, A.]
+  last_name: [Sharma]
+  first_name: [Rahul]
 
   style: apa
   locale: en
@@ -387,7 +388,7 @@ bootstrap:
 bootstrap-table:
   version: "1.21.4"
 fontawesome:
-  version: "6.4.0"
+  version: "6.6.0"
   integrity: "sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8="
 jquery:
   version: "3.6.0"
