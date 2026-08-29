@@ -1,4 +1,13 @@
 source 'https://rubygems.org'
+
+# stdlib gems extracted from Ruby 3.5+/4.0+ — required by some plugins when
+# building locally on modern Ruby. Harmless on Ruby 3.2.2 (deploy), where they
+# remain default gems.
+gem 'base64'
+gem 'csv'
+gem 'logger'
+gem 'ostruct'
+
 group :jekyll_plugins do
     gem 'classifier-reborn'
     gem 'jekyll'
