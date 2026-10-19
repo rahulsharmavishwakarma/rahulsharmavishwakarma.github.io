@@ -27,6 +27,11 @@ about:
 # Curated highlights shown on the About page.
 # `type` styles the pill: Essay | Paper | Note | Talk
 selected_writing:
+  - title: "Diffusion LLMs: what changes when you stop generating one token at a time"
+    url: "/blog/2026/diffusion-llms/"
+    date: "2026-10-20"
+    type: "Article"
+    desc: "How text diffusion models work, why they trade the memory-bound decode loop for a compute-bound one, and what DiffusionGemma, LLaDA2.x and Mercury actually show."
   - title: "Serving LLMs: what actually decides your latency"
     url: "/blog/2026/serving-llms-in-production/"
     date: "2026-08-30"
