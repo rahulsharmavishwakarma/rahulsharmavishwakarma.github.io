@@ -1,0 +1,36 @@
+<figure class="dfig" id="dfig-race">
+<div class="dfig-title">Figure 1 · One token per pass vs a block per pass</div>
+<div class="dlane"><div class="dlane-h"><b>Autoregressive</b><span data-ar>0 / 12 forward passes</span></div><div class="dtokrow" data-ar-row></div></div>
+<div class="dlane"><div class="dlane-h"><b>Diffusion (masked)</b><span data-df>0 / 4 forward passes</span></div><div class="dtokrow" data-df-row></div></div>
+<div class="dctl"><button class="dbtn" type="button" data-play>&#8635; Replay</button><span class="dnote" data-note>Same 12-token sentence, same number of weight reads per pass.</span></div>
+<figcaption class="dfig-cap"><b>Toy example.</b> The autoregressive model needs one pass per token. The diffusion model starts fully masked and commits its most confident positions together, so this sentence takes 4 passes. Real block-diffusion models do more work per pass: DiffusionGemma uses up to 48 denoising steps (about 12 on average) for a 256-token block.</figcaption>
+</figure>
+<script>
+(function(){
+  var root=document.getElementById('dfig-race'),d=window.dfig;
+  var words=['Diffusion','models','can','write','many','tokens','in','a','single','forward','pass','.'];
+  var groups=[[0,1,11],[3,5,8],[2,4,6,7],[9,10]];
+  var arRow=root.querySelector('[data-ar-row]'),dfRow=root.querySelector('[data-df-row]');
+  var arLab=root.querySelector('[data-ar]'),dfLab=root.querySelector('[data-df]');
+  var btn=root.querySelector('[data-play]'),timer=null;
+  function build(row){return words.map(function(w){var t=d.el('span','dtok m',w);row.appendChild(t);return t;});}
+  var ar=build(arRow),df=build(dfRow);
+  function reset(){ar.concat(df).forEach(function(t){t.className='dtok m';});arLab.textContent='0 / 12 forward passes';dfLab.textContent='0 / 4 forward passes';}
+  function reveal(t){t.className='dtok on pop';}
+  function finish(){
+    ar.concat(df).forEach(function(t){t.className='dtok on';});
+    arLab.textContent='12 / 12 forward passes';dfLab.textContent='4 / 4 forward passes';
+  }
+  function play(){
+    clearInterval(timer);reset();var step=0;
+    timer=setInterval(function(){
+      step++;
+      if(step<=12){reveal(ar[step-1]);arLab.textContent=step+' / 12 forward passes';}
+      if(step<=4){groups[step-1].forEach(function(i){reveal(df[i]);});dfLab.textContent=step+' / 4 forward passes';}
+      if(step>=12){clearInterval(timer);}
+    },650);
+  }
+  btn.addEventListener('click',play);
+  if(d.reduced){finish();}else{reset();d.whenVisible(root,play);}
+})();
+</script>

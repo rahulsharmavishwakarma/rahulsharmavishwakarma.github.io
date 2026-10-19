@@ -1,0 +1,33 @@
+<figure class="dfig" id="dfig-edit">
+<div class="dfig-title">Figure 5 · Token editing: a diffusion model can take a token back</div>
+<div class="dlane"><div class="dlane-h"><b data-phase></b><span data-pass></span></div><div class="dtokrow" data-row></div></div>
+<div class="dstat" data-cap></div>
+<div class="dctl"><button class="dbtn" type="button" data-prev>&#9664; Prev</button><button class="dbtn" type="button" data-next>Next &#9654;</button><button class="dbtn" type="button" data-play>&#8635; Replay</button></div>
+<figcaption class="dfig-cap"><b>Illustrative.</b> LLaDA2.1 adds <b>token-to-token (T2T) editing</b> on top of standard mask-to-token (M2T) decoding. A <i>Speedy</i> mode lowers the commit threshold so tokens are committed aggressively and relies on T2T edits to repair mistakes; a <i>Quality</i> mode uses conservative thresholds (LLaDA2.1 paper, arXiv:2602.08676). An autoregressive model cannot do this: once a token is emitted, it is part of the context forever.</figcaption>
+</figure>
+<script>
+(function(){
+  var root=document.getElementById('dfig-edit'),d=window.dfig;
+  var base=['The','capital','of','France','is','Paris','.'];
+  var steps=[
+    {ph:'Start',pass:'pass 0',tx:base.slice(),st:['m','m','m','m','m','m','m'],cap:'Everything starts masked.'},
+    {ph:'Mask-to-token (M2T), speedy mode',pass:'pass 1',tx:['The','capital','of','France','is','Berlin','.'],st:['on','on','on','on','on','bad','on'],cap:'A low commit threshold lets the sampler fill the whole sentence in one pass, including one wrong, low-confidence token.'},
+    {ph:'Token-to-token (T2T) edit',pass:'pass 2',tx:['The','capital','of','France','is','Berlin','.'],st:['on','on','on','on','on','bad flag','on'],cap:'The model re-reads the whole committed sentence and flags the token that disagrees with its context.'},
+    {ph:'Token-to-token (T2T) edit',pass:'pass 2',tx:base.slice(),st:['on','on','on','on','on','ok pop','on'],cap:'It overwrites the flagged token (Berlin → Paris). Two passes for the whole sentence, and the mistake was fixed instead of kept.'}
+  ];
+  var row=root.querySelector('[data-row]'),idx=0,timer=null;
+  var toks=base.map(function(w){var t=d.el('span','dtok m',w);row.appendChild(t);return t;});
+  function render(){
+    var s=steps[idx];
+    toks.forEach(function(t,i){t.textContent=s.tx[i];t.className='dtok '+s.st[i];});
+    root.querySelector('[data-phase]').textContent=s.ph;root.querySelector('[data-pass]').textContent=s.pass;root.querySelector('[data-cap]').textContent=s.cap;
+  }
+  function go(n){idx=Math.max(0,Math.min(steps.length-1,n));render();}
+  function play(){clearInterval(timer);go(0);timer=setInterval(function(){if(idx>=steps.length-1){clearInterval(timer);return;}go(idx+1);},2200);}
+  root.querySelector('[data-prev]').addEventListener('click',function(){clearInterval(timer);go(idx-1);});
+  root.querySelector('[data-next]').addEventListener('click',function(){clearInterval(timer);go(idx+1);});
+  root.querySelector('[data-play]').addEventListener('click',play);
+  render();
+  if(d.reduced){go(steps.length-1);}else{d.whenVisible(root,play);}
+})();
+</script>
