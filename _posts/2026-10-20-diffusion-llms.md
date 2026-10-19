@@ -6,7 +6,7 @@ description: "How text diffusion models work, why they swap the memory-bound dec
 tags: [llm, diffusion, inference]
 categories: [articles]
 featured: false
-published: false
+published: true
 ---
 
 {% include diffusion/shared.html %}
