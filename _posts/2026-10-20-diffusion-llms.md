@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Diffusion LLMs: what changes when you stop generating one token at a time"
-date: 2026-10-20 10:00:00 +0530
+date: 2026-10-20 00:00:00 +0530
 description: "How text diffusion models work, why they swap the memory-bound decode loop for a compute-bound one, and what the papers behind Mercury, LLaDA2.x and DiffusionGemma actually show."
 tags: [llm, diffusion, inference]
 categories: [articles]
