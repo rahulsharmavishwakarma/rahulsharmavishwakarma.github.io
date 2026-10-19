@@ -5,7 +5,7 @@ date: 2026-10-20 10:00:00 +0530
 description: "How text diffusion models work, why they swap the memory-bound decode loop for a compute-bound one, and what the papers behind Mercury, LLaDA2.x and DiffusionGemma actually show."
 tags: [llm, diffusion, inference]
 categories: [articles]
-featured: false
+featured: true
 published: true
 ---
 
