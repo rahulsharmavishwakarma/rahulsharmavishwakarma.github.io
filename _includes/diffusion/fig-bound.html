@@ -1,0 +1,49 @@
+<style>
+.dbnd-row{margin-bottom:.7rem}
+.dbnd-h{display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap;font-family:var(--font-mono);font-size:.7rem;color:var(--global-text-color-light);margin-bottom:.25rem}
+.dbnd-h b{color:var(--global-text-color)}
+.dbnd-track{position:relative;height:44px}
+.dseg{position:absolute;left:0;height:20px;border-radius:4px;font-family:var(--font-mono);font-size:.62rem;display:flex;align-items:center;padding-left:.4rem;white-space:nowrap;overflow:hidden;transition:width .35s}
+.dseg.mem{top:0;background:var(--global-divider-color);color:var(--global-text-color)}
+.dseg.cmp{top:23px;background:var(--global-theme-color);color:var(--global-bg-color)}
+.dbnd-res{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;align-items:baseline;border-top:1px solid var(--global-divider-color);padding-top:.7rem;margin-top:.5rem}
+.dbnd-big{font-family:var(--font-display);font-size:1.8rem;font-weight:600;line-height:1}
+.dbnd-big.win{color:var(--global-theme-color)}
+</style>
+<figure class="dfig" id="dfig-bound">
+<div class="dfig-title">Figure 4 · Toy model: why block decoding is fast, and when it stops being fast</div>
+<div class="dbnd-row"><div class="dbnd-h"><b>Autoregressive pass</b><span data-ar-b></span></div><div class="dbnd-track"><div class="dseg mem" data-ar-m>read weights</div><div class="dseg cmp" data-ar-c>compute</div></div></div>
+<div class="dbnd-row"><div class="dbnd-h"><b>Diffusion pass (256-token canvas)</b><span data-df-b></span></div><div class="dbnd-track"><div class="dseg mem" data-df-m>read weights</div><div class="dseg cmp" data-df-c>compute</div></div></div>
+<div class="dbnd-res"><span class="dbnd-big" data-x></span><span class="dstat" style="margin:0;min-height:0" data-txt></span></div>
+<label for="dfig-bound-b"><b data-bv></b> concurrent requests (batch)</label>
+<input id="dfig-bound-b" type="range" min="0" max="8" value="0" step="1" aria-label="Batch size">
+<label for="dfig-bound-t"><b data-tv></b> tokens committed per diffusion pass (TPF)</label>
+<input id="dfig-bound-t" type="range" min="1" max="24" value="12" step="1" aria-label="Tokens per forward pass">
+<label for="dfig-bound-r"><b data-rv></b> compute of one 256-token pass at batch 1 &divide; one weight read</label>
+<input id="dfig-bound-r" type="range" min="2" max="16" value="8" step="1" aria-label="Compute to memory ratio">
+<figcaption class="dfig-cap"><b>Toy model, not a benchmark.</b> A pass takes as long as the slower of reading the weights (once, whatever the batch) and doing the arithmetic (grows with batch and with positions processed). An autoregressive pass processes 1 position per request; a diffusion pass processes a 256-position canvas per request but commits TPF tokens. At batch 1 the weight read dominates and committing many tokens per read wins. As the batch grows, arithmetic dominates and the diffusion model's extra work per committed token (about 256 &divide; TPF positions) starts to cost you. The default ratio of 1.0 is my back-of-envelope for a dense bf16 model on an H100-class GPU (arithmetic-intensity ridge of roughly 300 FLOPs/byte, so a 256-token pass is about one weight read); real kernels, MoE routing and FP8 move it. For reference, the DiffusionGemma report measures TPF of about 20 and a 7.1x speed-up at batch size 1, and finds that it stays ahead of Gemma 4 with MTP on per-user and total throughput up to about 32 concurrent users, after which AR pulls ahead. My defaults cross over at a lower batch size; the model is not calibrated to that result.</figcaption>
+</figure>
+<script>
+(function(){
+  var root=document.getElementById('dfig-bound');
+  var batches=[1,2,4,8,16,32,64,128,256];
+  function q(s){return root.querySelector(s);}
+  var sb=q('#dfig-bound-b'),st=q('#dfig-bound-t'),sr=q('#dfig-bound-r');
+  function seg(el,w,label,max){el.style.width=Math.max(4,w/max*100)+'%';el.textContent=label;}
+  function render(){
+    var b=batches[+sb.value],tpf=+st.value,r=+sr.value/8;
+    q('[data-bv]').textContent=b;q('[data-tv]').textContent=tpf;q('[data-rv]').textContent=r.toFixed(2);
+    var arC=b*r/256,dfC=b*r;
+    var arT=Math.max(1,arC),dfT=Math.max(1,dfC),max=Math.max(arT,dfT);
+    seg(q('[data-ar-m]'),1,'read weights',max);seg(q('[data-ar-c]'),arC,arC>=1?'compute':'',max);
+    seg(q('[data-df-m]'),1,'read weights',max);seg(q('[data-df-c]'),dfC,'compute',max);
+    q('[data-ar-b]').textContent=(arC>1?'compute':'memory')+'-bound · '+b+' token'+(b>1?'s':'')+' per pass';
+    q('[data-df-b]').textContent=(dfC>1?'compute':'memory')+'-bound · '+(b*tpf)+' tokens per pass';
+    var x=(b*tpf/dfT)/(b/arT),big=q('[data-x]');
+    big.textContent=(x<.1?'<0.1':x.toFixed(1))+'×';big.classList.toggle('win',x>1);
+    q('[data-txt]').textContent=x>1.05?'Diffusion produces tokens '+x.toFixed(1)+'x faster than autoregressive in this toy model.':(x<.95?'Diffusion is '+(1/x).toFixed(1)+'x slower here: the GPU is already busy and it spends extra arithmetic per committed token.':'Break-even.');
+  }
+  [sb,st,sr].forEach(function(s){s.addEventListener('input',render);});
+  render();
+})();
+</script>

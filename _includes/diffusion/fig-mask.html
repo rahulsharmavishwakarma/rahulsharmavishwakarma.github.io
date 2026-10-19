@@ -1,0 +1,57 @@
+<figure class="dfig" id="dfig-mask">
+<div class="dfig-title">Figure 2 · Masked diffusion: the noise is just [MASK]</div>
+<div class="dctl" style="margin-top:0"><button class="dbtn" type="button" data-mode="train" aria-pressed="true">Training: add masks</button><button class="dbtn" type="button" data-mode="gen" aria-pressed="false">Generation: remove masks</button></div>
+<div class="dlane" style="margin-top:.7rem"><div class="dtokrow" data-row></div></div>
+<label for="dfig-mask-r"><b data-val></b></label>
+<input id="dfig-mask-r" type="range" min="0" max="12" value="12" step="1" aria-label="Number of masked tokens">
+<div class="dstat" data-stat></div>
+<figcaption class="dfig-cap"><b>Illustrative.</b> <b>Training:</b> pick a noise level <i>t</i>, mask each token independently with probability <i>t</i>, and train the Transformer to predict the original tokens at the masked positions only (the loss marker). <b>Generation:</b> run it in reverse. The model scores every masked position, and the sampler commits the most confident ones first. The bars are example confidences; in a real model they are recomputed after every pass.</figcaption>
+</figure>
+<script>
+(function(){
+  var root=document.getElementById('dfig-mask'),d=window.dfig;
+  var words=['Diffusion','models','can','write','many','tokens','in','a','single','forward','pass','.'];
+  var rnd=[.62,.15,.88,.31,.74,.05,.47,.93,.22,.58,.81,.39];
+  var conf=[.97,.93,.55,.81,.62,.90,.70,.50,.85,.45,.58,.99];
+  function order(a,desc){return a.map(function(v,i){return i;}).sort(function(x,y){return desc?a[y]-a[x]:a[x]-a[y];});}
+  var trainOrder=order(rnd,false);
+  var genOrder=order(conf,true);
+  var row=root.querySelector('[data-row]'),val=root.querySelector('[data-val]'),stat=root.querySelector('[data-stat]');
+  var slider=root.querySelector('input'),mode='train',cols=[];
+  words.forEach(function(w,i){
+    var c=d.el('span','dcol'),t=d.el('span','dtok',w),b=d.el('span','dbar'),bi=d.el('i'),l=d.el('span','dlossl','');
+    bi.style.height=Math.round(conf[i]*100)+'%';b.appendChild(bi);
+    c.appendChild(t);c.appendChild(b);c.appendChild(l);row.appendChild(c);
+    cols.push({t:t,b:b,l:l});
+  });
+  function render(){
+    var m=+slider.value,masked={},k;
+    if(mode==='train'){for(k=0;k<m;k++)masked[trainOrder[k]]=1;}
+    else{for(k=0;k<m;k++)masked[genOrder[words.length-1-k]]=1;}
+    cols.forEach(function(c,i){
+      var isM=!!masked[i];
+      c.t.className='dtok '+(isM?'m':'on');
+      c.b.style.display=mode==='gen'?'flex':'none';
+      c.l.style.display=mode==='train'?'flex':'none';
+      c.l.textContent=(mode==='train'&&isM)?'loss':'';
+    });
+    var t=(m/12).toFixed(2);
+    if(mode==='train'){
+      val.textContent='noise level t = '+t+'  ·  '+m+' of 12 tokens masked';
+      stat.textContent=m===0?'Clean sentence. Nothing to predict, so no loss at t = 0.':m===12?'Fully masked. The model must predict everything from nothing.':'Predict the '+m+' masked token'+(m>1?'s':'')+' from the '+(12-m)+' visible ones (bidirectional context).';
+    }else{
+      val.textContent='committed: '+(12-m)+' / 12  ·  still masked: '+m;
+      stat.textContent=m===12?'Start: every position is [MASK]. The model predicts all 12 at once.':m===0?'Done. Every position has been committed.':'Committed the most confident positions first; '+m+' still masked and re-scored next pass.';
+    }
+  }
+  slider.addEventListener('input',render);
+  root.querySelectorAll('[data-mode]').forEach(function(b){
+    b.addEventListener('click',function(){
+      mode=b.getAttribute('data-mode');
+      root.querySelectorAll('[data-mode]').forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+      slider.value=mode==='train'?6:12;render();
+    });
+  });
+  slider.value=6;render();
+})();
+</script>

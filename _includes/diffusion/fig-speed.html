@@ -1,0 +1,31 @@
+<style>
+.dspd-row{display:grid;grid-template-columns:minmax(7.5rem,32%) 1fr;gap:.6rem;align-items:center;margin-bottom:.5rem}
+.dspd-l{font-family:var(--font-mono);font-size:.72rem;color:var(--global-text-color-light)}
+.dspd-l b{color:var(--global-text-color);font-weight:600;display:block}
+.dspd-f{white-space:nowrap}
+.dspd-t{background:var(--global-bg-color);border:1px solid var(--global-divider-color);border-radius:6px;height:30px;position:relative;overflow:hidden}
+.dspd-f{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--global-divider-color);display:flex;align-items:center;justify-content:flex-end;padding-right:.5rem;font-family:var(--font-mono);font-size:.72rem;color:var(--global-text-color);transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+.dspd-v{position:absolute;top:0;bottom:0;display:flex;align-items:center;margin-left:.5rem;font-family:var(--font-mono);font-size:.72rem;color:var(--global-text-color);white-space:nowrap;transition:left 1.1s cubic-bezier(.2,.7,.2,1)}
+.dspd-f.hot{background:var(--global-theme-color);color:var(--global-bg-color);font-weight:600}
+@media (prefers-reduced-motion:reduce){.dspd-f{transition:none}}
+</style>
+<figure class="dfig" id="dfig-speed">
+<div class="dfig-title">Figure 6 · Measured decode speed, one H100, batch size 1</div>
+<div class="dspd-row"><div class="dspd-l"><b>Gemma 4 (AR)</b>1 token / pass</div><div class="dspd-t"><div class="dspd-f" data-v="204" data-t="204 tok/s"></div></div></div>
+<div class="dspd-row"><div class="dspd-l"><b>Gemma 4 + MTP</b>~1.4 tokens / pass</div><div class="dspd-t"><div class="dspd-f" data-v="303" data-t="303 tok/s"></div></div></div>
+<div class="dspd-row"><div class="dspd-l"><b>DiffusionGemma</b>~19.7 tokens / pass</div><div class="dspd-t"><div class="dspd-f hot" data-v="1479" data-t="1,479 tok/s"></div></div></div>
+<figcaption class="dfig-cap"><b>Source:</b> DiffusionGemma technical report (arXiv:2608.00146): FP8, batch size 1, 4096 input and 1024 output tokens. The authors report 7.1x over autoregressive Gemma 4 and 4.8x over Gemma 4 with multi-token prediction (MTP). Same base model, same hardware. These are batch-size-1 numbers: the same report finds the advantage over Gemma 4 with MTP ends at about 32 concurrent users (see Section 3).</figcaption>
+</figure>
+<script>
+(function(){
+  var root=document.getElementById('dfig-speed'),d=window.dfig;
+  var bars=root.querySelectorAll('.dspd-f');
+  function fill(){bars.forEach(function(b){
+    var w=+b.getAttribute('data-v')/1479*100;
+    b.style.width=w+'%';
+    if(w>40){b.textContent=b.getAttribute('data-t');}
+    else{var v=d.el('span','dspd-v',b.getAttribute('data-t'));v.style.left=w+'%';b.parentNode.appendChild(v);}
+  });}
+  if(d.reduced){fill();}else{d.whenVisible(root,function(){setTimeout(fill,100);});}
+})();
+</script>

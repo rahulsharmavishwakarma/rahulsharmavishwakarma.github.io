@@ -201,10 +201,54 @@ pre {
 // Wide tables scroll inside their own box on narrow screens instead of
 // stretching the page horizontally (e.g. the datasets table in the 2024 whitepaper).
 .post-content table {
-  display: block;
+  display: table;
+  width: 100%;
   max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  margin: 1.5em 0;
+  border-collapse: collapse;
+  border: 0;
+  font-variant-numeric: tabular-nums;
+}
+// Editorial look: horizontal hairlines only, no vertical grid, no zebra/hover fill.
+.post-content table th,
+.post-content table td {
+  padding: 0.6rem 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: left;
+  vertical-align: top;
+  border: 0;
+  border-top: 1px solid var(--global-divider-color);
+  background: transparent;
+  box-shadow: none;
+  color: var(--global-text-color);
+}
+.post-content table th {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--global-text-color-light);
+  border-top: 0;
+  border-bottom: 1px solid var(--global-text-color-light);
+}
+.post-content table tbody tr:first-child td { border-top: 0; }
+.post-content table td:first-child { font-weight: 600; white-space: nowrap; }
+.post-content table.table-hover > tbody > tr:hover > * {
+  background: transparent;
+  --bs-table-accent-bg: transparent;
+  color: var(--global-text-color);
+}
+// On phones the table scrolls inside its own box instead of stretching the page
+// (e.g. the datasets table in the 2024 whitepaper).
+@media (max-width: 640px) {
+  .post-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .post-content table td:first-child { white-space: normal; }
 }
 .table {
   color: var(--global-text-color);

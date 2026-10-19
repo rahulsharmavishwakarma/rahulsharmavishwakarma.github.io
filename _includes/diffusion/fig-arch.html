@@ -1,0 +1,82 @@
+<style>
+.darch-stages{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
+.darch-st{border:1px solid var(--global-divider-color);border-radius:8px;padding:.5rem .6rem;background:var(--global-bg-color);transition:border-color .3s,box-shadow .3s,opacity .3s;opacity:.55;position:relative}
+.darch-st.act{border-color:var(--global-theme-color);box-shadow:0 0 0 3px rgba(253,186,116,.18);opacity:1}
+.darch-st b{display:block;font-family:var(--font-mono);font-size:.68rem;color:var(--global-theme-color);margin-bottom:.15rem}
+.darch-st span{font-size:.74rem;line-height:1.35;color:var(--global-text-color-light);display:block}
+.darch-rowlab{font-family:var(--font-mono);font-size:.68rem;color:var(--global-text-color-light);margin:.8rem 0 .3rem;display:flex;justify-content:space-between;gap:.5rem;flex-wrap:wrap}
+.darch-canvas{display:grid;grid-template-columns:repeat(16,1fr);gap:3px;padding:.5rem;border:1px dashed var(--global-divider-color);border-radius:8px;min-height:2.6rem;transition:opacity .3s}
+.darch-canvas .dtok{min-width:0;width:100%;height:1.4rem;padding:0}
+.darch-canvas.empty{opacity:.25}
+.darch-canvas .dtok.on{background:rgba(253,186,116,.28)}
+.darch-cache{display:flex;gap:4px;padding:.5rem;border:1px solid var(--global-divider-color);border-radius:8px;min-height:2.6rem;align-items:stretch;background:var(--global-bg-color)}
+.darch-blk{flex:0 0 auto;display:flex;align-items:center;justify-content:center;padding:0 .8rem;border-radius:6px;font-family:var(--font-mono);font-size:.7rem;border:1px solid var(--global-theme-color);color:var(--global-theme-color);background:rgba(253,186,116,.1);animation:dpop2 .5s ease-out}
+.darch-blk.p{flex:1 1 auto;color:var(--global-text-color-light);border-color:var(--global-divider-color);background:var(--global-card-bg-color)}
+@keyframes dpop2{from{transform:translateY(-8px);opacity:0}to{transform:none;opacity:1}}
+.darch-cap{min-height:3.4em;font-size:.83rem;margin-top:.8rem;line-height:1.5}
+@media (max-width:560px){.darch-stages{grid-template-columns:1fr 1fr}.darch-canvas{grid-template-columns:repeat(8,1fr)}}
+@media (prefers-reduced-motion:reduce){.darch-blk{animation:none}}
+</style>
+<figure class="dfig" id="dfig-arch">
+<div class="dfig-title">Figure 3 · Block-diffusion decoding, step by step</div>
+<div class="darch-stages">
+<div class="darch-st" data-s="0"><b>1 · PREFILL</b><span>Prompt runs once with <i>causal</i> attention and fills the KV cache.</span></div>
+<div class="darch-st" data-s="1"><b>2 · NEW CANVAS</b><span>256 placeholder positions for the next block of output.</span></div>
+<div class="darch-st" data-s="2"><b>3 · DENOISE</b><span>Several passes with <i>bidirectional</i> attention over the canvas and the cache.</span></div>
+<div class="darch-st" data-s="3"><b>4 · COMMIT</b><span>Finished block is appended to the KV cache like ordinary context.</span></div>
+</div>
+<div class="darch-rowlab"><span>CANVAS (256 tokens, drawn as 16 cells)</span><span data-pass></span></div>
+<div class="darch-canvas empty" data-canvas></div>
+<div class="darch-rowlab"><span>KV CACHE (read-only context for the next canvas)</span></div>
+<div class="darch-cache" data-cache></div>
+<div class="darch-cap" data-cap></div>
+<div class="dctl"><button class="dbtn" type="button" data-prev>&#9664; Prev</button><button class="dbtn" type="button" data-play>&#10074;&#10074; Pause</button><button class="dbtn" type="button" data-next>Next &#9654;</button><span class="dnote" data-count></span></div>
+<figcaption class="dfig-cap"><b>Schematic of DiffusionGemma-style decoding</b> as described in Google's developer guide and technical report: a 256-token canvas is denoised in parallel, up to 48 steps (about 12 on average with adaptive stopping), and each finished canvas is added to the KV cache before the next one starts. This is the same hybrid idea as <i>Block Diffusion</i> (Arriola et al., ICLR 2025): autoregressive across blocks, diffusion within a block.</figcaption>
+</figure>
+<script>
+(function(){
+  var root=document.getElementById('dfig-arch'),d=window.dfig;
+  var order=[0,5,10,3,13,7,12,1,15,4,9,14,2,8,11,6];
+  var steps=[
+    {s:0,cache:['P'],canvas:'empty',n:0,pass:'',cap:'The prompt is processed once with causal attention and written to the KV cache, exactly as an autoregressive model does in prefill.'},
+    {s:1,cache:['P'],canvas:'masked',n:0,pass:'canvas 1 · pass 0',cap:'Canvas 1: a block of 256 placeholder positions. Nothing is decided yet.'},
+    {s:2,cache:['P'],canvas:'part',n:5,pass:'canvas 1 · pass 3',cap:'Each pass, every position attends to the whole canvas and to the cache. Confident tokens appear first and help settle their neighbours.'},
+    {s:2,cache:['P'],canvas:'part',n:11,pass:'canvas 1 · pass 8',cap:'More positions commit. Because attention is bidirectional, a late token can still shape an earlier one before it is finalized.'},
+    {s:2,cache:['P'],canvas:'part',n:16,pass:'canvas 1 · pass 12',cap:'Adaptive stopping ends denoising when the block has settled: about 12 passes on average, 48 at most, instead of 256 sequential ones.'},
+    {s:3,cache:['P','C1'],canvas:'empty',n:0,pass:'',cap:'The finished canvas is encoded and appended to the KV cache. From now on it is ordinary, fixed context, so no cache invalidation.'},
+    {s:1,cache:['P','C1'],canvas:'masked',n:0,pass:'canvas 2 · pass 0',cap:'Canvas 2 starts from placeholders and can attend to the prompt and to canvas 1 through the cache.'},
+    {s:2,cache:['P','C1'],canvas:'part',n:16,pass:'canvas 2 · pass 12',cap:'Denoise again. The cost of a block is a handful of whole-canvas passes, not one pass per token.'},
+    {s:3,cache:['P','C1','C2'],canvas:'empty',n:0,pass:'',cap:'Repeat until an end-of-sequence token appears. Longer answers are just more canvases.'}
+  ];
+  var canvas=root.querySelector('[data-canvas]'),cache=root.querySelector('[data-cache]'),cap=root.querySelector('[data-cap]');
+  var pass=root.querySelector('[data-pass]'),count=root.querySelector('[data-count]'),play=root.querySelector('[data-play]');
+  var stages=root.querySelectorAll('[data-s]');
+  var cells=[];for(var i=0;i<16;i++){var c=d.el('span','dtok m','');canvas.appendChild(c);cells.push(c);}
+  var idx=0,timer=null,prevCache=1;
+  function render(){
+    var st=steps[idx];
+    stages.forEach(function(e){e.classList.toggle('act',+e.getAttribute('data-s')===st.s);});
+    canvas.classList.toggle('empty',st.canvas==='empty');
+    var shown={};for(var k=0;k<st.n;k++)shown[order[k]]=1;
+    cells.forEach(function(c,i){c.className='dtok '+(shown[i]?'on':'m');});
+    if(st.cache.length!==prevCache||cache.childNodes.length===0){
+      cache.textContent='';
+      st.cache.forEach(function(b){
+        var e=d.el('span','darch-blk'+(b==='P'?' p':''),b==='P'?'prompt':'canvas '+b.charAt(1));
+        if(b==='P')e.style.animation='none';
+        cache.appendChild(e);
+      });
+      prevCache=st.cache.length;
+    }
+    pass.textContent=st.pass;cap.textContent=st.cap;count.textContent=(idx+1)+' / '+steps.length;
+  }
+  function go(n){idx=(n+steps.length)%steps.length;render();}
+  function start(){stop();timer=setInterval(function(){go(idx+1);},2600);play.innerHTML='&#10074;&#10074; Pause';}
+  function stop(){clearInterval(timer);timer=null;play.innerHTML='&#9654; Play';}
+  root.querySelector('[data-prev]').addEventListener('click',function(){stop();go(idx-1);});
+  root.querySelector('[data-next]').addEventListener('click',function(){stop();go(idx+1);});
+  play.addEventListener('click',function(){timer?stop():start();});
+  prevCache=0;render();stop();
+  if(!d.reduced){d.whenVisible(root,start);}
+})();
+</script>
