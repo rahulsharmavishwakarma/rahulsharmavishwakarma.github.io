@@ -126,20 +126,6 @@
       "keywords": ["Deep Learning", "Computer Vision", "NLP", "Transformers", "Diffusion Models", "Multimodal Models", "VLMs", "RAG", "Agentic Systems"]
     }
   ],
-  "awards and competitions": [
-    {
-      "title": "Runner-up — Sangam Hardware Hackathon 2021",
-      "date": "2021",
-      "summary": "GISiL — a real-time gesture interpreter for sign language.",
-      "url": "https://pragyan.org/sangam21-hardware/"
-    },
-    {
-      "title": "Poster presentation — MIDL 2022",
-      "date": "2022",
-      "summary": "Medical Imaging with Deep Learning conference.",
-      "url": "https://2022.midl.io/papers/e_s_1"
-    }
-  ],
   "certificates": [
     {
       "name": "MongoDB Certified Associate Developer",
