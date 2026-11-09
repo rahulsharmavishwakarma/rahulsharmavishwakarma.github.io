@@ -19,11 +19,11 @@ Production build: `JEKYLL_ENV=production bundle exec jekyll build` → outputs t
 
 ## Ruby version notes
 - The Homebrew Ruby is at `/opt/homebrew/opt/ruby/bin` and is **not** on the default shell PATH — export it (above) before any `bundle` command.
-- The `Gemfile` pins a few stdlib gems (`ostruct`, `logger`, `csv`, `base64`) that Ruby 4.0 removed from the default set; these are no-ops on Ruby 3.2.2 (the CI deploy version).
+- The `Gemfile` pins a few stdlib gems (`ostruct`, `logger`, `csv`, `base64`) that Ruby 4.0 removed from the default set; these are no-ops on Ruby 3.2 (the CI deploy version — latest 3.2.x patch).
 - `Gemfile.lock` is gitignored — CI resolves fresh.
 
 ## Deploy
-Push to `master` → `.github/workflows/deploy.yml` builds with Ruby 3.2.2 and deploys `_site/` to `gh-pages`. No manual deploy step.
+Push to `master` → `.github/workflows/deploy.yml` builds with Ruby 3.2 (latest patch) and deploys `_site/` to `gh-pages`. No manual deploy step.
 
 ## Where things are
 - **Copy/content:** `_data/content.yml` (see `docs/CONTENT.md`).
